@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Szymon Przybył"]
   s.email       = ["apocalyptiq@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/apocalyptiq/weighted_random"
   s.summary     = %q{Weighted randomization extension for ActiveRecord}
   s.description = %q{ActiveRecord extension for weighted randomization which supplies loading records with weight for randomize into database and weighted randomization of them}
 

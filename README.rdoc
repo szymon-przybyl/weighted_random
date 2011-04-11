@@ -1,0 +1,75 @@
+= Weighted Random
+Weighted randomization extension for ActiveRecord.
+
+Loads records with weight value for randomization and gives ability of weighted randomization of them.
+
+== Setup
+
+Simply put the latest gem from into your Gemfile:
+
+  gem 'weighted_random'
+
+== Usage
+
+=== Migration
+
+Put these two lines into your migration file of model for which you want weighted randomization ability:
+
+  t.integer :weight
+  t.integer :cumulative_weight
+
+=== Load methods
+
+Load methods for weighted randomization into your desired class model:
+
+  class LastName << ActiveRecord::Base
+    weighted_randomizable
+    ...
+  end
+
+=== Load records
+
+Load records with weight property for randomization, here is an example of loading last names and their frequencies from CSV file:
+
+last_names.csv:
+  Smith,10
+  Johnson,8
+  Williams,7
+  Jones,6
+  Brown,6
+  Davis,5
+  Miller,4
+  Wilson,3
+
+seeds.rb:
+  csv = CSV.open(File.expand_path("seeds/first_names.csv", File.dirname(__FILE__)))
+  names = csv.collect { |name, weight| {:name => name, :weight => to_i} }
+  csv.close
+  LastName.create_with_cumulative_weight(names)
+
+Simply you have to supply collection of hashes, each with :weight integer property, to create_with_cumulative_weight
+method of your desired model class and it will load them all into database with additional cumulative_weight attribute.
+
+=== Weighted randomization
+
+To randomize some record in a weighted way, simply run:
+
+  LastName.weighted_rand
+
+== Demonstration
+
+  10.times { puts FirstName.weighted_rand.name }
+  Johnson
+  Brown
+  Johnson
+  Smith
+  Smith
+  Jones
+  Smith
+  Williams
+  Miller
+  Jones
+
+== Author
+
+Szymon Przybył (github.com/apocalyptiq)
