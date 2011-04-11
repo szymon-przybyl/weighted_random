@@ -58,7 +58,7 @@ To randomize some record in a weighted way, simply run:
 
 == Demonstration
 
-  10.times { puts FirstName.weighted_rand.name }
+  10.times { puts LastName.weighted_rand.name }
   Johnson
   Brown
   Johnson
