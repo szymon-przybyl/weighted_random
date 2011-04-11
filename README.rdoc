@@ -3,33 +3,33 @@ Weighted randomization extension for ActiveRecord.
 
 Loads records with weight value for randomization and gives ability of weighted randomization of them.
 
-== Setup
+== Installation
 
-Simply put the latest gem from into your Gemfile:
+=== Gem
 
   gem 'weighted_random'
 
-== Usage
-
 === Migration
 
-Put these two lines into your migration file of model for which you want weighted randomization ability:
+Migration file of model, for which you want weighted randomizable ability, has to have :cumulative_weight integer attribute:
 
-  t.integer :weight
   t.integer :cumulative_weight
 
-=== Load methods
+=== Model
 
-Load methods for weighted randomization into your desired class model:
+Load weighted randomization ability into your desired model class:
 
-  class LastName << ActiveRecord::Base
+  class LastName < ActiveRecord::Base
     weighted_randomizable
+    attr_accessible :cumulative_weight
     ...
   end
 
-=== Load records
+== Usage
 
-Load records with weight property for randomization, here is an example of loading last names and their frequencies from CSV file:
+=== Load data
+
+Load records with :weight attribute for randomization, here is an example of loading last names and their frequencies from CSV file:
 
 last_names.csv:
   Smith,10
@@ -48,17 +48,18 @@ seeds.rb:
   LastName.create_with_cumulative_weight(names)
 
 Simply you have to supply collection of hashes, each with :weight integer property, to create_with_cumulative_weight
-method of your desired model class and it will load them all into database with additional cumulative_weight attribute.
+method of your desired model class, so it will load them all into database with additional cumulative_weight attribute, which is
+reqired for faster weighted randomization.
 
 === Weighted randomization
 
-To randomize some record in a weighted way, simply run:
+To get weighed random record simply run:
 
   LastName.weighted_rand
 
-== Demonstration
+=== Demonstration
 
-  10.times { puts FirstName.weighted_rand.name }
+  10.times { puts LastName.weighted_rand.name }
   Johnson
   Brown
   Johnson
@@ -72,4 +73,4 @@ To randomize some record in a weighted way, simply run:
 
 == Author
 
-Szymon Przybył (github.com/apocalyptiq)
+Szymon Przybył (http://github.com/apocalyptiq)
