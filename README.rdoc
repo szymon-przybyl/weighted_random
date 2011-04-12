@@ -85,7 +85,9 @@ db/seeds/last_names.csv:
   Wilson,3
 
 db/seeds.rb:
-  LastName.create_with_cumulative_weight(CSV.table(File.expand_path("seeds/last_names.csv", File.dirname(__FILE__))))
+  LastName.create_with_cumulative_weight(
+    CSV.table(File.expand_path("seeds/last_names.csv", File.dirname(__FILE__))).collect(&:to_hash)
+  )
 
 == Author
 
