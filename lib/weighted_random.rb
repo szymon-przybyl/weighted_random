@@ -10,7 +10,7 @@ module WeightedRandom
 
   module ClassMethods
     def weighted_rand
-      self.where("cumulative_weight > #{Kernel.rand(self.maximum('cumulative_weight')-1)}").order('cumulative_weight').first
+      self.where("cumulative_weight > #{Kernel.rand(self.maximum('cumulative_weight')-1)}").order('cumulative_weight').limit(1).first
     end
 
     def create_with_cumulative_weight(collection)
