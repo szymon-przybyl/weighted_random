@@ -11,7 +11,7 @@ Loads records with weight value for randomization and gives ability of weighted 
 
 === Model
 
-Generate model with <code>weight</code> and `cumulative_weight` integer attributes:
+Generate model with <code>weight</code> and <code>cumulative_weight</code> integer attributes:
 
   rails g model your_model [your_attributes] weight:integer cumulative_weight:integer 
 
@@ -20,7 +20,7 @@ Or add these two attributes into existing migration:
   t.integer :weight
   t.integer :cumulative_weight
 
-Load weighted randomization stuff into desired model and set accessibillity of `weight` and `cumulative_weight` attributes:
+Load weighted randomization stuff into desired model and set accessibillity of previous these attributes:
 
   class YourModel < ActiveRecord::Base
     weighted_randomizable
@@ -32,7 +32,7 @@ Load weighted randomization stuff into desired model and set accessibillity of `
 
 === Load data
 
-Load records with `weight` attribute for randomization, here is an example of loading last names and their frequencies from CSV file:
+Load records with <code>weight</code> attribute for randomization, here is an example of loading last names and their frequencies from CSV file:
 
 last_names.csv:
   Smith,10
@@ -50,9 +50,9 @@ seeds.rb:
   csv.close
   LastName.create_with_cumulative_weight(names)
 
-Simply you have to supply collection of hashes, each with `weight` integer property, to `create_with_cumulative_weight`
-method of your desired model class, so it will load them all into database with additional `cumulative_weight` attribute, which is
-reqired for faster weighted randomization.
+Simply you have to supply collection of hashes, each with <code>weight</code> integer property, to
+<code>create_with_cumulative_weight</code> method of your desired model class, so it will load them all
+into database with additional <code>cumulative_weight</code> attribute, which is reqired for faster weighted randomization.
 
 === Weighted randomization
 
