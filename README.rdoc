@@ -1,7 +1,8 @@
 = Weighted Random
+
 Weighted randomization extension for ActiveRecord.
 
-Loads records with weight value for randomization and gives ability of weighted randomization of them.
+Gives ability to get weighted random record from particular database relation.
 
 == Installation
 
