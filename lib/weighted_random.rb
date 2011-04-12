@@ -14,10 +14,12 @@ module WeightedRandom
     end
 
     def create_with_cumulative_weight(collection)
-      self.create self.compute_and_insert_cumulative_weight(collection)
+      self.create WeightedRandom.set_cumulative_weight(collection)
     end
+  end
 
-    def compute_and_insert_cumulative_weight(collection)
+  class << self
+    def set_cumulative_weight(collection)
       weight_sum = 0
       collection.collect do |item|
         weight_sum += item[:weight]
