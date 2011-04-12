@@ -15,7 +15,7 @@ Generate model with <code>weight</code> and <code>cumulative_weight</code> integ
 
   rails g model your_model [your_attributes] weight:integer cumulative_weight:integer 
 
-Or add these two attributes into existing migration:
+Or add these two attributes into migration of existing model:
 
   t.integer :weight
   t.integer :cumulative_weight
