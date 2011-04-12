@@ -30,29 +30,23 @@ Load weighted randomization stuff into desired model and set accessibillity of p
 
 == Usage
 
-=== Load data
+=== Importing data
 
-Load records with <code>weight</code> attribute for randomization, here is an example of loading last names and their frequencies from CSV file:
+To import data for randomization you have to provide an array of hashes with <code>weight</code> attributes to
+<code>create_with_cumulative_weight</code> method, for example:
 
-last_names.csv:
-  Smith,10
-  Johnson,8
-  Williams,7
-  Jones,6
-  Brown,6
-  Davis,5
-  Miller,4
-  Wilson,3
+  FirstName.create_with_cumulative_weight([
+    {:name => "Smith",   :weight => 10},
+    {:name => "Johnson", :weight => 8},
+    {:name => "Williams, :weight => 7},
+    {:name => "Jones",   :weight => 6},
+    {:name => "Brown",   :weight => 6},
+    {:name => "Davis",   :weight => 5},
+    {:name => "Miller",  :weight => 4},
+    {:name => "Wilson",  :weight => 3}
+  ])
 
-seeds.rb:
-  csv = CSV.open(File.expand_path("seeds/first_names.csv", File.dirname(__FILE__)))
-  names = csv.collect { |name, weight| {:name => name, :weight => to_i} }
-  csv.close
-  LastName.create_with_cumulative_weight(names)
-
-Simply you have to supply collection of hashes, each with <code>weight</code> integer property, to
-<code>create_with_cumulative_weight</code> method of your desired model class, so it will load them all
-into database with additional <code>cumulative_weight</code> attribute, which is reqired for faster weighted randomization.
+This method will save all this hashes in database with additional <code>cumulative_weight</code> attribute.
 
 === Weighted randomization
 
@@ -60,7 +54,7 @@ To get weighed random record simply run:
 
   LastName.weighted_rand
 
-=== Demonstration
+Demonstration:
 
   10.times { puts LastName.weighted_rand.name }
   Johnson
@@ -73,6 +67,24 @@ To get weighed random record simply run:
   Williams
   Miller
   Jones
+
+== Import data from CSV
+
+Here is an example of importing last names and their frequencies from CSV file:
+
+db/seeds/last_names.csv:
+  name,weight
+  Smith,10
+  Johnson,8
+  Williams,7
+  Jones,6
+  Brown,6
+  Davis,5
+  Miller,4
+  Wilson,3
+
+db/seeds.rb:
+  LastName.create_with_cumulative_weight(CSV.table(File.expand_path("seeds/last_names.csv", File.dirname(__FILE__))))
 
 == Author
 
