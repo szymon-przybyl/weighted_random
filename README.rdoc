@@ -37,14 +37,14 @@ To import data for randomization you have to provide an array of hashes with <co
 <code>create_with_cumulative_weight</code> method, for example:
 
   FirstName.create_with_cumulative_weight([
-    {:name => "Smith",   :weight => 10},
-    {:name => "Johnson", :weight => 8},
+    {:name => "Smith",    :weight => 10},
+    {:name => "Johnson",  :weight => 8},
     {:name => "Williams", :weight => 7},
-    {:name => "Jones",   :weight => 6},
-    {:name => "Brown",   :weight => 6},
-    {:name => "Davis",   :weight => 5},
-    {:name => "Miller",  :weight => 4},
-    {:name => "Wilson",  :weight => 3}
+    {:name => "Jones",    :weight => 6},
+    {:name => "Brown",    :weight => 6},
+    {:name => "Davis",    :weight => 5},
+    {:name => "Miller",   :weight => 4},
+    {:name => "Wilson",   :weight => 3}
   ])
 
 This method will save all this hashes in database with additional <code>cumulative_weight</code> attribute.
