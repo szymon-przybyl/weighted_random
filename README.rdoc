@@ -1,4 +1,4 @@
-`= Weighted Random
+= Weighted Random
 Weighted randomization extension for ActiveRecord.
 
 Loads records with weight value for randomization and gives ability of weighted randomization of them.
@@ -9,19 +9,20 @@ Loads records with weight value for randomization and gives ability of weighted 
 
   gem 'weighted_random'
 
-=== Migration
+=== Model
 
-You have to set integer attributes `weight` and `cumulative_weight` in migration file of your model,
-for which you want weighted randomization ability:
+Generate model with <code>weight</code> and `cumulative_weight` integer attributes:
+
+  rails g model your_model [your_attributes] weight:integer cumulative_weight:integer 
+
+Or add these two attributes into existing migration:
 
   t.integer :weight
   t.integer :cumulative_weight
 
-=== Model
+Load weighted randomization stuff into desired model and set accessibillity of `weight` and `cumulative_weight` attributes:
 
-Load weighted randomization ability into your desired model class:
-
-  class LastName < ActiveRecord::Base
+  class YourModel < ActiveRecord::Base
     weighted_randomizable
     attr_accessible :weight, :cumulative_weight
     ...
