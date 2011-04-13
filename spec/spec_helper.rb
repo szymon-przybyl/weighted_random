@@ -8,20 +8,19 @@ require 'active_support'
 # Load WeightedRandom module!
 require File.join(ROOT, 'lib/weighted_random')
 
-# Load extension inserter
+# Load ActiveRecord extension inserter
 WeightedRandom::Railtie.insert
 
-# Establish database connection
-ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database => ':memory:'
 
-# Test model
+# Model for tests
 class TestModel < ActiveRecord::Base
-  weighted_randomizable
-  attr_accessible :name, :weight, :cumulative_weight
-
+  establish_connection :adapter => 'sqlite3', :database => ':memory:'
   connection.create_table self.table_name, :force => true do |t|
     t.string :name
     t.integer :weight
     t.integer :cumulative_weight
   end
+
+  weighted_randomizable
+  attr_accessible :name, :weight, :cumulative_weight
 end
