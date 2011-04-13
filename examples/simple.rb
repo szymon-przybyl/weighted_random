@@ -4,7 +4,6 @@ require 'active_record'
 require 'active_support'
 
 $LOAD_PATH << File.join(ROOT, 'lib')
-$LOAD_PATH << File.join(ROOT, 'lib', 'weighted_random')
 
 # Load WeightedRandom module!
 require File.join(ROOT, 'lib/weighted_random')
