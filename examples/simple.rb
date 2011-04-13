@@ -37,4 +37,4 @@ LastName.create! [
   {:name => 'Wilson',   :weight => 3}
 ]
 
-10.times { puts LastName.weighted_rand }
+10.times { puts LastName.weighted_rand.name }
