@@ -34,7 +34,7 @@ Load weighted randomization stuff into desired model and set accessibillity of p
 
 Just create records, each must contain <code>weight</code> value:
 
-  FirstName.create [
+  LastName.create [
     {:name => "Smith",    :weight => 10},
     {:name => "Johnson",  :weight => 8},
     {:name => "Williams", :weight => 7},
