@@ -14,18 +14,18 @@ Gives ability to get weighted random record from particular database relation.
 
 Generate model with <code>weight</code> and <code>cumulative_weight</code> integer attributes:
 
-  rails g model your_model [your_attributes] weight:integer cumulative_weight:integer 
+  rails g model your_model [your_attributes] weight:integer cumulative_weight:integer
 
 Or add these two attributes into migration of existing model:
 
   t.integer :weight
   t.integer :cumulative_weight
 
-Load weighted randomization stuff into desired model and set accessibillity of previous these attributes:
+Load weighted randomization stuff into desired model and set accessibillity of <code>weight</code> attribute:
 
   class YourModel < ActiveRecord::Base
     weighted_randomizable
-    attr_accessible :weight, :cumulative_weight
+    attr_accessible :weight
   end
 
 == Usage
