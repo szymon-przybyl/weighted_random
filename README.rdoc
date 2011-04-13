@@ -35,14 +35,14 @@ Load weighted randomization stuff into desired model and set accessibillity of p
 Just create records, each must contain <code>weight</code> value:
 
   LastName.create [
-    {:name => "Smith",    :weight => 10},
-    {:name => "Johnson",  :weight => 8},
-    {:name => "Williams", :weight => 7},
-    {:name => "Jones",    :weight => 6},
-    {:name => "Brown",    :weight => 6},
-    {:name => "Davis",    :weight => 5},
-    {:name => "Miller",   :weight => 4},
-    {:name => "Wilson",   :weight => 3}
+    {:name => 'Smith',    :weight => 10},
+    {:name => 'Johnson',  :weight => 8},
+    {:name => 'Williams', :weight => 7},
+    {:name => 'Jones',    :weight => 6},
+    {:name => 'Brown',    :weight => 6},
+    {:name => 'Davis',    :weight => 5},
+    {:name => 'Miller',   :weight => 4},
+    {:name => 'Wilson',   :weight => 3}
   ]
 
 It automatically sets <code>cumulative_weight</code> attribute for each record.
@@ -62,7 +62,7 @@ db/seeds/last_names.csv:
 
 db/seeds.rb:
   LastName.create(
-    CSV.table(File.expand_path("seeds/last_names.csv", File.dirname(__FILE__))).collect(&:to_hash)
+    CSV.table(File.expand_path('seeds/last_names.csv', File.dirname(__FILE__))).collect(&:to_hash)
   )
 
 === Weighted randomization
