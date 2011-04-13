@@ -49,9 +49,9 @@ describe WeightedRandom, "auto management of cumulative weight" do
   context "when there are some records saved" do
     before(:each) do
       TestModel.create [
-        {:name => 'first-50',  :weight => 50, :cumulative_weight => 50},
-        {:name => 'second-10', :weight => 10, :cumulative_weight => 60},
-        {:name => 'last-1',    :weight => 1,  :cumulative_weight => 61}
+        {:name => 'first-50',  :weight => 50}, # 50
+        {:name => 'second-10', :weight => 10}, # 60
+        {:name => 'last-1',    :weight => 1}   # 61
       ]
     end
 
