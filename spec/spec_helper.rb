@@ -1,9 +1,9 @@
+ROOT = File.join(File.dirname(__FILE__), '..')
+
 require 'rspec'
 
 require 'active_record'
 require 'active_support'
-
-ROOT = File.join(File.dirname(__FILE__), '..')
 
 # Load WeightedRandom module!
 require File.join(ROOT, 'lib/weighted_random')
