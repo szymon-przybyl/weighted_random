@@ -1,12 +1,13 @@
+require 'rspec'
+
+require 'active_record'
+require 'active_support'
+
 DIR = File.dirname(__FILE__)
 ROOT = File.join(DIR, '..')
 
 # Load WeightedRandom module!
 require File.join(ROOT, 'lib/weighted_random')
-
-require 'rspec'
-require 'active_record'
-require 'active_support'
 
 # Load extension inserter
 WeightedRandom::Railtie.insert
