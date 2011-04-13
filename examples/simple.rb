@@ -1,16 +1,12 @@
-ROOT = File.join(File.dirname(__FILE__), '..')
-
 require 'active_record'
 require 'active_support'
 
-$LOAD_PATH << File.join(ROOT, 'lib')
+$LOAD_PATH << File.join(File.dirname(__FILE__), '../lib')
 
-# Load WeightedRandom module!
-require File.join(ROOT, 'lib/weighted_random')
+require 'weighted_random'
 
-# Load ActiveRecord extension inserter
+# Insert ActiveRecord extension
 WeightedRandom::Railtie.insert
-
 
 class LastName < ActiveRecord::Base
   establish_connection :adapter => 'sqlite3', :database => ':memory:'
@@ -23,7 +19,6 @@ class LastName < ActiveRecord::Base
   weighted_randomizable
   attr_accessible :name, :weight, :cumulative_weight
 end
-
 
 LastName.create! [
   {:name => 'Smith',    :weight => 10},
