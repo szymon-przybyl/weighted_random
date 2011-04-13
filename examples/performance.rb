@@ -51,14 +51,14 @@ Benchmark.bmbm do |bm|
 
   Exhibit.create HASHES
 
-  bm.report "WRModel.create for one record on table with #{TIMES} records" do
+  bm.report "WRModel.create for one record on table with #{TIMES}+ records" do
     TIMES.times { |i| Exhibit.create HASHES[i] }
   end
 
   Exhibit.delete_all
   Exhibit.create HASHES
 
-  bm.report "WRModel.create for #{RECORDS} records on table with #{TIMES} records" do
+  bm.report "WRModel.create for #{RECORDS} records on table with #{TIMES}+ records" do
     (TIMES/RECORDS).times { |i| Exhibit.create HASHES[i*RECORDS, RECORDS] }
   end
 
