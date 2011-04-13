@@ -5,6 +5,7 @@ module WeightedRandom
   module Loader
     def weighted_randomizable
       extend WeightedRandom::ClassMethods
+      include WeightedRandom::InstanceMethods
     end
   end
 
@@ -12,21 +13,20 @@ module WeightedRandom
     def weighted_rand
       self.where("cumulative_weight > #{Kernel.rand(self.maximum('cumulative_weight'))}").order('cumulative_weight').limit(1).first
     end
-
-    def create_with_cumulative_weight(collection)
-      self.create WeightedRandom.set_cumulative_weight(collection)
-    end
   end
 
-  class << self
-    def set_cumulative_weight(collection)
-      weight_sum = 0
-      collection.collect do |item|
-        weight_sum += item[:weight]
-        item[:cumulative_weight] = weight_sum
-        item
+  module InstanceMethods
+    def self.included base
+      base.instance_eval do
+        before_create :set_cumulative_weight_of_new_record
       end
     end
+
+    private
+
+      def set_cumulative_weight_of_new_record
+        self.cumulative_weight = self.class.maximum('cumulative_weight').to_i + self.weight
+      end
   end
 
 end

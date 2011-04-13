@@ -8,22 +8,18 @@ describe WeightedRandom, "weighted randomization" do
     counter
   end
 
-  def reload_with_data(data)
-    TestModel.destroy_all
-    TestModel.create_with_cumulative_weight(data)
-  end
-
   context "in 1000 rands" do
     let(:rand_times) { 1000 }
 
     before(:each) do
+      TestModel.destroy_all
       # Set random number generator seed, so every test will receive the same sequence of numbers
       Kernel.srand(77)
     end
 
     describe "deviation tolerance" do
-      before(:all) do
-        reload_with_data [
+      before(:each) do
+        TestModel.create [
           {:name => 'first-50',  :weight => 50},
           {:name => 'second-25', :weight => 25},
           {:name => 'third-10',  :weight => 10},
@@ -65,8 +61,8 @@ describe WeightedRandom, "weighted randomization" do
     end
 
     describe "boundary records with weight 1 (10% of overall)" do
-      before(:all) do
-        reload_with_data [
+      before(:each) do
+        TestModel.create [
           {:name => 'first-1',  :weight => 1},
           {:name => 'second-8', :weight => 8},
           {:name => 'last-1',   :weight => 1}
