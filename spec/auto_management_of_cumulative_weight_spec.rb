@@ -7,7 +7,7 @@ describe WeightedRandom, "auto management of cumulative weight" do
   end
 
   before(:each) do
-    TestModel.destroy_all
+    TestModel.delete_all
   end
 
   context "when there are no records saved" do
@@ -17,7 +17,7 @@ describe WeightedRandom, "auto management of cumulative weight" do
       end
 
       it "sets cumulative weight of that record to its weight" do
-        cumulative_weight_of('first-77').should be(77)
+        cumulative_weight_of('first-77').should == 77
       end
     end
 
@@ -32,15 +32,15 @@ describe WeightedRandom, "auto management of cumulative weight" do
 
       context "sets cumulative weight of" do
         specify "first record to its weight" do
-          cumulative_weight_of('first-50').should be(50)
+          cumulative_weight_of('first-50').should == 50
         end
 
         specify "second record to first record weight + its weight" do
-          cumulative_weight_of('second-1').should be(51)
+          cumulative_weight_of('second-1').should == 51
         end
 
         specify "third record to first record weight + second record weight + its weight" do
-          cumulative_weight_of('last-10').should be(61)
+          cumulative_weight_of('last-10').should == 61
         end
       end
     end
@@ -61,16 +61,16 @@ describe WeightedRandom, "auto management of cumulative weight" do
       end
 
       it "sets cumulative weight of that record to maximum cumulative weight of existing records + its weight" do
-        cumulative_weight_of('new-10').should be(71)
+        cumulative_weight_of('new-10').should == 71
       end
 
       context "does not change cumulative weights of existing records" do
         specify "first" do
-          cumulative_weight_of('first-50').should be(50)
+          cumulative_weight_of('first-50').should == 50
         end
 
         specify "last" do
-          cumulative_weight_of('last-1').should be(61)
+          cumulative_weight_of('last-1').should == 61
         end
       end
     end
@@ -85,21 +85,21 @@ describe WeightedRandom, "auto management of cumulative weight" do
 
       context "sets cumulative weight of" do
         specify "first created record to max cumulative weight for existing records + its weight" do
-          cumulative_weight_of('next-10').should be(71)
+          cumulative_weight_of('next-10').should == 71
         end
 
         specify "second created record to max cumulative weight for existing records + first record weight + its weight" do
-          cumulative_weight_of('another-20').should be(91)
+          cumulative_weight_of('another-20').should == 91
         end
       end
 
       context "does not change cumulative weights of existing records" do
         specify "first" do
-          cumulative_weight_of('first-50').should be(50)
+          cumulative_weight_of('first-50').should == 50
         end
 
         specify "last" do
-          cumulative_weight_of('last-1').should be(61)
+          cumulative_weight_of('last-1').should == 61
         end
       end
     end
