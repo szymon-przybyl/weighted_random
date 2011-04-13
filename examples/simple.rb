@@ -17,7 +17,7 @@ class LastName < ActiveRecord::Base
   end
 
   weighted_randomizable
-  attr_accessible :name, :weight, :cumulative_weight
+  attr_accessible :name, :weight
 end
 
 LastName.create! [
