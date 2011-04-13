@@ -26,17 +26,15 @@ Load weighted randomization stuff into desired model and set accessibillity of p
   class YourModel < ActiveRecord::Base
     weighted_randomizable
     attr_accessible :weight, :cumulative_weight
-    ...
   end
 
 == Usage
 
 === Importing data
 
-To import data for randomization you have to provide an array of hashes with <code>weight</code> attributes to
-<code>create_with_cumulative_weight</code> method, for example:
+Just create records, each must contain <code>weight</code> value:
 
-  FirstName.create_with_cumulative_weight([
+  FirstName.create [
     {:name => "Smith",    :weight => 10},
     {:name => "Johnson",  :weight => 8},
     {:name => "Williams", :weight => 7},
@@ -45,9 +43,27 @@ To import data for randomization you have to provide an array of hashes with <co
     {:name => "Davis",    :weight => 5},
     {:name => "Miller",   :weight => 4},
     {:name => "Wilson",   :weight => 3}
-  ])
+  ]
 
-This method will save all this hashes in database with additional <code>cumulative_weight</code> attribute.
+It automatically sets <code>cumulative_weight</code> attribute for each record.
+
+Here is an example of importing data from CSV file:
+
+db/seeds/last_names.csv:
+  name,weight
+  Smith,10
+  Johnson,8
+  Williams,7
+  Jones,6
+  Brown,6
+  Davis,5
+  Miller,4
+  Wilson,3
+
+db/seeds.rb:
+  LastName.create(
+    CSV.table(File.expand_path("seeds/last_names.csv", File.dirname(__FILE__))).collect(&:to_hash)
+  )
 
 === Weighted randomization
 
@@ -68,26 +84,6 @@ Demonstration:
   Williams
   Miller
   Jones
-
-== Import data from CSV
-
-Here is an example of importing last names and their frequencies from CSV file:
-
-db/seeds/last_names.csv:
-  name,weight
-  Smith,10
-  Johnson,8
-  Williams,7
-  Jones,6
-  Brown,6
-  Davis,5
-  Miller,4
-  Wilson,3
-
-db/seeds.rb:
-  LastName.create_with_cumulative_weight(
-    CSV.table(File.expand_path("seeds/last_names.csv", File.dirname(__FILE__))).collect(&:to_hash)
-  )
 
 == Author
 
