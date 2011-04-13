@@ -12,9 +12,8 @@ require File.join(ROOT, 'lib/weighted_random')
 # Load extension inserter
 WeightedRandom::Railtie.insert
 
-# Database configuration and connection
-config = YAML::load(IO.read(DIR + '/config/database.yml'))
-ActiveRecord::Base.establish_connection(config['test'])
+# Establish database connection
+ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database => ':memory:'
 
 # Test model
 class TestModel < ActiveRecord::Base
