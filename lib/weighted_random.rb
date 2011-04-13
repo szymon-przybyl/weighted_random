@@ -13,15 +13,15 @@ module WeightedRandom
     def weighted_rand
       where("cumulative_weight > #{Kernel.rand(maximum('cumulative_weight'))}").order('cumulative_weight').first
     end
+  end
 
-    def self.extended base
+  module InstanceMethods
+    def self.included base
       base.class_eval do
         before_create :set_cumulative_weight_of_new_record
       end
     end
-  end
 
-  module InstanceMethods
     private
 
       def set_cumulative_weight_of_new_record
