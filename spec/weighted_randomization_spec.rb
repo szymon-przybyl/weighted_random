@@ -8,7 +8,7 @@ describe WeightedRandom, "weighted randomization" do
     counter
   end
 
-  def clear_and_load_data(data)
+  def reload_with_data(data)
     TestModel.destroy_all
     TestModel.create_with_cumulative_weight(data)
   end
@@ -23,7 +23,7 @@ describe WeightedRandom, "weighted randomization" do
 
     describe "deviation tolerance" do
       before(:all) do
-        clear_and_load_data [
+        reload_with_data [
           {:name => 'first-50',  :weight => 50},
           {:name => 'second-25', :weight => 25},
           {:name => 'third-10',  :weight => 10},
@@ -66,7 +66,7 @@ describe WeightedRandom, "weighted randomization" do
 
     describe "boundary records with weight 1 (10% of overall)" do
       before(:all) do
-        clear_and_load_data [
+        reload_with_data [
           {:name => 'first-1',  :weight => 1},
           {:name => 'second-8', :weight => 8},
           {:name => 'last-1',   :weight => 1}
