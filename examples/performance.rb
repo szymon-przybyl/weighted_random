@@ -1,5 +1,4 @@
 TIMES = (ENV['N'] || 1000).to_i
-RECORDS = 1000
 
 require 'active_record'
 require 'active_support'
@@ -18,6 +17,7 @@ class Exhibit < ActiveRecord::Base
     t.integer :weight
     t.integer :cumulative_weight
   end
+  connection.add_index self.table_name.to_sym, :cumulative_weight
 
   weighted_randomizable
   attr_accessible :name, :weight
@@ -26,40 +26,23 @@ end
 require 'benchmark'
 
 HASHES = []
-RECORDS.times { |i| HASHES[i] = { :name => 'Sample name', :weight => rand(1000) } }
+TIMES.times { |i| HASHES[i] = { :name => 'Sample name', :weight => rand(1000) } }
 
 Benchmark.bmbm do |bm|
-  bm.report 'WRModel.create for one record on empty table' do
-    TIMES.times do |i|
-      Exhibit.create HASHES[i % RECORDS]
-      Exhibit.delete_all
-    end
+  bm.report 'WRModel.create with one hash' do
+    TIMES.times { |i| Exhibit.create HASHES[i] }
   end
 
-  bm.report "WRModel.create for #{RECORDS} records on empty table" do
-    (TIMES/RECORDS).times do |i|
-      Exhibit.create HASHES
-      Exhibit.delete_all
-    end
-  end
+  Exhibit.delete_all
 
-  Exhibit.create HASHES
-
-  bm.report "WRModel.create for one record on table with #{TIMES}+ records" do
-    TIMES.times { |i| Exhibit.create HASHES[i % RECORDS] }
+  bm.report "WRModel.create with collection of #{TIMES/10} hashes" do
+    10.times { |i| Exhibit.create HASHES[i*TIMES/10, TIMES/10] }
   end
 
   Exhibit.delete_all
   Exhibit.create HASHES
 
-  bm.report "WRModel.create for #{RECORDS} records on table with #{TIMES}+ records" do
-    (TIMES/RECORDS).times { |i| Exhibit.create HASHES }
-  end
-
-  Exhibit.delete_all
-  10.times { Exhibit.create HASHES }
-
-  bm.report "WRModel.weighted_rand on table with #{TIMES*10} records" do
+  bm.report "WRModel.weighted_rand on table with #{TIMES} records" do
     TIMES.times { Exhibit.weighted_rand }
   end
 

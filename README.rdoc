@@ -18,10 +18,18 @@ Generate model with <code>weight</code> and <code>cumulative_weight</code> integ
 
 Or add these two attributes into migration of existing model:
 
-  t.integer :weight
-  t.integer :cumulative_weight
+  create_table :your_table, do |t|
+    t.integer :weight
+    t.integer :cumulative_weight
+  end
 
-Load weighted randomization stuff into desired model and set accessibillity of <code>weight</code> attribute:
+It is a good idea to add index on <code>cumulative_weight</code> attribute:
+
+  add_index :your_table, :cumulative_weight
+
+Based on <code>Benchmark.bmbm</code> times, it makes creating of records 2 times faster and getting a random record 11 times faster!
+
+Finally, load weighted randomization stuff into desired model and set accessibillity of <code>weight</code> attribute:
 
   class YourModel < ActiveRecord::Base
     weighted_randomizable

@@ -20,6 +20,7 @@ class TestModel < ActiveRecord::Base
     t.integer :weight
     t.integer :cumulative_weight
   end
+  connection.add_index self.table_name.to_sym, :cumulative_weight
 
   weighted_randomizable
   attr_accessible :name, :weight
